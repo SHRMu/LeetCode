@@ -1,11 +1,12 @@
-- [x] [Two Sum](#two_sum)
-- [x] [Add Two Numbers](#add_two_numbers)
-- [ ] [longest Substring Without Repeating Characters](#longest_substring)
+- [x] 1. [Two Sum](#two_sum)
+- [x] 2. [Add Two Numbers](#add_two_numbers)
+- [x] 3.  [longest Substring Without Repeating Characters](#lengthOfLongestSubstring)
+- [ ] 5. [Longest Palindromic Substring](#longestPalindrome)
 
 
 ---
 
-##### <span id = "two_sum"> Two Sum </span>
+##### <span id = "two_sum">1. Two Sum </span>
 
 - Brute Force
 
@@ -39,7 +40,7 @@ public int[] twoSum(int[] nums, int target) {
 }
 ```
 
-##### <span id = "add_two_numbers"> Add Two Numbers </span>
+##### <span id = "add_two_numbers">2. Add Two Numbers </span>
 
 
 ```
@@ -70,5 +71,58 @@ public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
     return l3.next;
 }
 ```
-##### <span id="longest_substring">longest Substring Without Repeating Characters</span>
+##### <span id="lengthOfLongestSubstring">3. longest Substring Without Repeating Characters</span>
 
+- Brute Force
+
+
+```
+public int lengthOfLongestSubstring(String s) {
+    if (s.equals("") || s == null){return 0;}
+    int max = 0;
+    for (int i = 0; i < s.length(); i++) {
+        Set<Character> set = new HashSet<>();
+        set.add(s.charAt(i));
+        int num = 1;
+        for (int j = i+1; j < s.length(); j++) {
+            if (set.contains(s.charAt(j))){
+                break;
+            }else {
+                set.add(s.charAt(j));
+                num ++ ;
+            }
+        }
+        if (num > max) max = num;
+    }
+    return max;
+}
+```
+
+- Three Points
+
+
+```
+public int lengthOfLongestSubstring(String s) {
+    if (s.equals("") || s == null){return 0;}
+    int max = 0;
+    for (int mid = 0; mid < s.length(); mid ++){
+        int left = mid -1;
+        int right = mid +1;
+        Set<Character> set = new HashSet<>();
+        set.add(s.charAt(mid));
+        while (left >= 0 && !set.contains(s.charAt(left))){
+            set.add(s.charAt(left));
+            left --;
+        }
+        while (right < s.length() && !set.contains(s.charAt(right))){
+            set.add(s.charAt(right));
+            right ++;
+        }
+        max = Math.max(right-left-1,max);
+    }
+    return max;
+}
+```
+
+
+##### <span id="longestPalindrome">5. Longest Palindromic Substring</span>
